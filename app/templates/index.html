@@ -2,7 +2,10 @@
 
 {% block content %}
 {% if current_user.is_anonymous %}
-  <h1>Hello, stranger!</h1>
+  <h1>Konichiwa Bitches!</h1>
+  <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.cBq5vU2BGYm3AvvNhpFGQwHaEK%26pid%3DApi&f=1">
+  <br></br>
+  <p>BushFlix is in development. Please do not create an account yet.</p>
 {% else  %}
   <h1>Hi, {{ current_user.username }}!</h1>
 {% endif %}

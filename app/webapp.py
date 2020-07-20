@@ -3,6 +3,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
+from flask import send_from_directory
 from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
@@ -12,14 +13,30 @@ from werkzeug.urls import url_parse
 from app.extensions import db
 from app.forms import LoginForm
 from app.forms import RegistrationForm
-from app.models import User
+from app.models import User, Films
+from config import basedir
+import os
 
 server_bp = Blueprint('main', __name__)
-
+uploads = os.path.join(basedir,'app', 'uploads')
 
 @server_bp.route('/')
 def index():
-    return render_template("index.html", title='Home Page')
+    return render_template("index.html", title='Home Page' )
+
+@server_bp.route('/films', methods=['GET', 'POST'])
+def films():
+    films = [i for i in os.listdir( uploads )]
+    #if request.method == 'POST':
+        #return request.form['submit_button']
+    #else:
+    return render_template("films.html", title='Films', films = films )
+
+@server_bp.route('/download/<films>')
+def downloads(films):
+    return send_from_directory(directory=uploads, filename=films, as_attachment=True)
+    #return films
+    
 
 
 @server_bp.route('/login/', methods=['GET', 'POST'])

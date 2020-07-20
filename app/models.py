@@ -24,3 +24,16 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+class Films(db.Model):
+    film_name = db.Column(db.String(128), primary_key=True)
+    year = db.Column(db.Integer)
+    imdb_link = db.Column(db.String(128))
+    imdb_rating = db.Column(db.Float)
+    no_downloads = db.Column(db.Integer)
+
+
+
+
+    def __repr__(self):
+        return '<Film {}>'.format(self.film_name)
