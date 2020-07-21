@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>More films are coming</h1>
+  {% for tv_show in shows %}
+    <p>
+    {{ tv_show }}         : <b> <a href={{ url_for('main.show',  show=tv_show) }} > get </a> </b>
+
+    </p>
+  {% endfor %}
+
+{% endblock %}

@@ -3,6 +3,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
+from flask import Flask, flash, get_flashed_messages
 from flask import send_from_directory
 from flask_login import current_user
 from flask_login import login_required
@@ -19,22 +20,42 @@ import os
 
 server_bp = Blueprint('main', __name__)
 uploads = os.path.join(basedir,'app', 'uploads')
+tv = os.path.join(basedir,'app', 'tv')
 
 @server_bp.route('/')
 def index():
     return render_template("index.html", title='Home Page' )
 
-@server_bp.route('/films', methods=['GET', 'POST'])
+@server_bp.route('/films/', methods=['GET', 'POST'])
 def films():
-    films = [i for i in os.listdir( uploads )]
+    films = os.listdir( os.path.join(basedir,'app', 'films') )
     #if request.method == 'POST':
         #return request.form['submit_button']
     #else:
-    return render_template("films.html", title='Films', films = films )
+    return render_template("media.html", title='Films', folders=films, media='films' )
+    
+    
+@server_bp.route('/tv')
+@server_bp.route('/tv/')
+def tv():
+    shows = os.listdir( os.path.join(basedir,'app', 'tv') )
+    return render_template("media.html", title='TV', folders=shows, media='tv' )
 
-@server_bp.route('/download/<films>')
-def downloads(films):
-    return send_from_directory(directory=uploads, filename=films, as_attachment=True)
+@server_bp.route('/<media>/<show>', methods=['GET', 'POST'])
+@login_required
+def show(media, show):
+    return render_template("show.html", title=show, files = os.listdir(folder), show=show, media=media )
+    
+
+@server_bp.route('/flash-test')
+def flash():
+    flash('You were successfully logged in')
+    return render_template("flash.html")
+
+@server_bp.route('/download/<media>/<folder>/<file>')
+def downloads(media, folder, file):
+    #return str(os.path.join(basedir,'app', folder, file))
+    return send_from_directory(directory=os.path.join(basedir,'app', media, folder), filename=file, as_attachment=True)
     #return films
     
 

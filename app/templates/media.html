@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>More {{ media.upper() if media=='tv' else media }} coming soon</h1>
+  {% for folder in folders %}
+    <p>
+    {{ folder }}         : <b> <a href={{ url_for('main.show', media=media, show=folder) }} > get </a> </b>
+
+    </p>
+  {% endfor %}
+  
+{% endblock %}

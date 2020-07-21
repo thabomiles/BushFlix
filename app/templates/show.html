@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>BushFlix hopes you enjoys {{show}} </h1>
+  {% for file in files %}
+    <p>
+    {{ file }}  : <b>  <a href={{ url_for('main.downloads', media=media, folder=show, file=file) }} > download </a> </b>
+
+    </p>
+  {% endfor %}
+  
+  
+{% endblock %}

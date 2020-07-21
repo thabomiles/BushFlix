@@ -3,10 +3,9 @@
 {% block content %}
 {% if current_user.is_anonymous %}
   <h1>More films are coming</h1>
-  {% for films in films %}
+  {% for films in file_name %}
     <p>
-    {{ films}}         : <b> <a href={{ url_for('main.downloads',  films=films) }} >download </a> </b>
-    <!--{{ films}}         : <b>  <input type="submit" name="submit_button" value= {{films}} > -->
+    {{ films}}         : <b> <a href={{ url_for('main.shows', media='films', show=films) }} >download </a> </b>
     </p>
   {% endfor %}
   
