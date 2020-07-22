@@ -44,17 +44,17 @@ def tv():
 @server_bp.route('/<media>/<show>', methods=['GET', 'POST'])
 @login_required
 def show(media, show):
-    return render_template("show.html", title=show, files = os.listdir(folder), show=show, media=media )
+    return render_template("show.html", title=show, files = os.listdir( os.path.join(basedir,'app', media, show)), show=show, media=media )
     
 
 @server_bp.route('/flash-test')
 def flash():
-    flash('You were successfully logged in')
+    #flash('You were successfully logged in')
     return render_template("flash.html")
 
 @server_bp.route('/download/<media>/<folder>/<file>')
 def downloads(media, folder, file):
-    #return str(os.path.join(basedir,'app', folder, file))
+    
     return send_from_directory(directory=os.path.join(basedir,'app', media, folder), filename=file, as_attachment=True)
     #return films
     
